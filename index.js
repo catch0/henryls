@@ -28,17 +28,18 @@ const tweets = twts.tweets;
 //streams for a specific user
 
 console.log("listening...")
-var stream = T.stream('statuses/filter', {track: "Tim Tams", follow: '932718726172055760'});
+var stream = T.stream('statuses/filter', {follow: '880634071419846657'});
 stream.on('tweet', function(tweet, err){
   console.log("we found a tweet...");
-  var statusObj = {status: "@" + tweet.user.screen_name + " I will find you and force you to eat Tim Tams",
-                in_reply_to_status_id: tweet.id_str
-}
-  T.post('statuses/update', statusObj, function(err,tweetReply, resp){
-    if(err){
-      console.log("error in posting", err)
-    }
-    console.log("it worked!!");
-    console.log(tweetReply.text);
-  });
+  console.log(tweet);
+//   var statusObj = {status: "@" + tweet.user.screen_name + " I will find you and force you to eat Tim Tams",
+//                 in_reply_to_status_id: tweet.id_str
+// }
+//   T.post('statuses/update', statusObj, function(err,tweetReply, resp){
+//     if(err){
+//       console.log("error in posting", err)
+//     }
+//     console.log("it worked!!");
+//     console.log(tweetReply.text);
+//   });
 });
