@@ -4,6 +4,10 @@ const T = new twit(config);
 const twts = require('./data/tweets.js');
 const tweets = twts.tweets;
 
+const spence = '880634071419846657';
+const burgess = '15751083';
+const duckboi = '865898987836014592';
+const henry = '925160703006330880';
 // function gets users tweets and will store them as an array of objects
 
 // T.get('statuses/user_timeline', {screen_name: 'spencepeacock1', language: 'en', include_rts: false, exclude_replies: true, count: 2 } , gotData);
@@ -18,28 +22,38 @@ const tweets = twts.tweets;
 //       console.log("Text:  " + data[i].text);
 //       console.log("User:   " + data[i].user.name);
 //       console.log("Time:" + data[i].created_at);
-//       console.log("user id string: " + data[i].id_str);
+//       console.log("tweet id: " + data[i].id);
 //       var date = new Date();
 //       var day = date.getDay();
 //   }
 // }
 
 
-//streams for a specific user
+//streams for michael burgess and replies
 
 console.log("listening...")
-var stream = T.stream('statuses/filter', {follow: '880634071419846657'});
-stream.on('tweet', function(tweet, err){
-  console.log("we found a tweet...");
-  console.log(tweet);
-  var statusObj = {status: "@" + tweet.user.screen_name + " superfast reply",
-                in_reply_to_status_id: tweet.id_str
-}
-  T.post('statuses/update', statusObj, function(err,tweetReply, resp){
-    if(err){
-      console.log("error in posting", err)
-    }
-    console.log("it worked!!");
-    console.log(tweetReply.text);
-  });
-});
+// var stream = T.stream('statuses/filter', {follow: spence});
+// stream.on('tweet', function(tweet, err){
+//   console.log("we found a tweet...");
+//   console.log(tweet);
+//   var statusObj = {status: "@" + tweet.user.screen_name + " tired of this guy? lets replace him with @willfisher4cong",
+//                 in_reply_to_status_id: tweet.id_str
+// }
+//   T.post('statuses/update', statusObj, function(err,tweetReply, resp){
+//     if(err){
+//       console.log("error in posting", err)
+//     }
+//     console.log("it worked!!");
+//     console.log(tweetReply.text);
+//   });
+// });
+
+//streams for someone and retweets
+
+var stream2 = T.stream('statuses/filter', {follow: spence});
+ stream2.on('tweet', function(tweet, err){
+   var retweet = tweet.id_str;
+   T.post('statuses/retweet/:id', { id: retweet }, function (err, data, response) {
+     console.log(data)
+   });
+ });
